@@ -1,11 +1,5 @@
 #Requires -Modules Microsoft.PowerShell.ThreadJob
 
-@{
-    FunctionsToExport = 'Invoke-FileDownload'
-    CmdletsToExport = @()
-    AliasesToExport = @()
-}
-
 function Invoke-FileDownload {
 
     [CmdletBinding()]
