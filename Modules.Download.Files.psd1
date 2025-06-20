@@ -28,4 +28,9 @@
 
     # Variables to export from this module
     AliasesToExport = @()
+
+    # Modules Required to Wokr
+    RequiredModules = @('Microsoft.PowerShell.ThreadJob')
+
+    ProjectUri = "https://github.com/V1ola1ne/Download-Files-PS-Module"
 }
