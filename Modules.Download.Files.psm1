@@ -58,7 +58,9 @@ function Invoke-FileDownload {
     [System.Console]::WriteLine("Downloading Files, from Specified links...")                               # Write this string to the Console
     
     $Jobs = foreach ($uri in $link) {                                                                       # Send all "Job-Objects, created by the Loop to this variable"
-                
+        
+        Write-Verbose "Attempt to Download from '$uri'"
+
         if ($null -ne $DownloadFile[$link.IndexOf("$uri")]) {                                                 # If a Name exist at the current Link index
         
             if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {# And if a File with the specified File Name, at the current index, does not already Exist
@@ -79,7 +81,7 @@ function Invoke-FileDownload {
 
         }
 
-        Write-Verbose "Downloading to File $FileName"
+        Write-Verbose "Downloading to File '$FileName'"
         
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                             # Create a useable Download Path from the Extracted File Name and the Download Directory
         
