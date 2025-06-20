@@ -20,6 +20,7 @@ function Invoke-FileDownload {
         [switch]$UnZip,                                                                          # If this Parameter is Specified, .Zip Files will be automatically unzipped
 
         [string]$DownloadFile
+        
         )
 
 
