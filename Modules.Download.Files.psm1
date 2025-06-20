@@ -6,14 +6,14 @@ function Invoke-FileDownload {
     param(
 
         [Parameter(ValueFromPipeline = $true, Mandatory, Position = 0)]                                     # Provide all links, from which you want to Download files. These must be direct File links.
-        [Object]$link,
+        [array]$link,
 
         [Parameter(Mandatory, Position = 1)]                                                                # Provide the Folder to which you want to Download you files.
         [string]$DownloadDirectory,
 
         [switch]$UnZip,                                                                                     # If this Parameter is Specified, .Zip Files will be automatically unzipped
 
-        [Object]$DownloadFile
+        [array]$DownloadFile
 
         )
 
