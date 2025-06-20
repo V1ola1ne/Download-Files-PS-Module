@@ -12,18 +12,18 @@ If you Remove everything around it and just use the Core Methods, you can Downlo
 
 ### Parameters
 
-    -link <string> 
+-link <string> 
         this is a direct link to a file. It may look like this "https://example.com/test.txt"
 
-    -DownloadDirectory <string>
+-DownloadDirectory <string>
         This is the Directory to which you want to Download the file.
 
-    [-UnZip]
+[-UnZip]
         Using this parameter, the Script will unzip any File, with the .zip File extension. (May also work von .rar or .7z files, but untested)
 
 ### Usage
 
-    If you have a direct file link, use the -link and -DownloadDirectory parameters to get Download the File from the Direct file link
+If you have a direct file link, use the -link and -DownloadDirectory parameters to get Download the File from the Direct file link
 
-    Keep in Mind that the Module currently only works with files, to which you don't need any Authentication
-    Adding the Option for Authentication may come in Future Releases.
+Keep in Mind that the Module currently only works with files, to which you don't need any Authentication
+Adding the Option for Authentication may come in Future Releases.
