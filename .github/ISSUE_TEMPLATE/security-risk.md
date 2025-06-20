@@ -11,7 +11,11 @@ assignees: ''
 A clear and concise description of what the vulnerability is.
 
 **Describe the File where the Issue was found**
-Give the full file name, and explain, where (which function, class, etc.) the vulnerability was detected
+Give the full file name, and explain where (which function, class, etc.) the vulnerability was detected.
+
+**Provide the corresponding lines of code.**
+Use an indented Block, with a copy of the lines of code that are a security risk.
+Provide comments, when appropriate.
 
 **Describe a possible Solution**
 A clear and concise description of what you think needs to happen to fix the vulnerability.
