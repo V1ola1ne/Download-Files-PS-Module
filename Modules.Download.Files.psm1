@@ -17,7 +17,7 @@ function Invoke-FileDownload {
         [Parameter(Mandatory, Position = 1)]                                                    # Provide the Folder to which you want to Download you files.
         [string]$DownloadDirectory,
 
-        [switch]$UnZip                                                                          # If this Parameter is Specified, .Zip Files will be automatically unzipped
+        [switch]$UnZip,                                                                          # If this Parameter is Specified, .Zip Files will be automatically unzipped
 
         [string]$DownloadFile
         )
