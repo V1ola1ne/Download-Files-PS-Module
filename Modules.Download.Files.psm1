@@ -59,13 +59,11 @@ function Invoke-FileDownload {
     
     $Jobs = foreach ($uri in $link) {                                                                       # Send all "Job-Objects, created by the Loop to this variable"
                 
-        if ($null -ne $DownloadFile[$link.IndexOf($uri)]) {                                                 # If a Name exist at the current Link index
+        if ($null -ne $DownloadFile[$link.IndexOf("$uri")]) {                                                 # If a Name exist at the current Link index
         
-            if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf($uri)])")) {# And if a File with the specified File Name, at the current index, does not already Exist
+            if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {# And if a File with the specified File Name, at the current index, does not already Exist
 
-                $FileName = $DownloadFile[$link.IndexOf($uri)]                                              # use this, instead of trying to extract a name from the link
-
-                continue                                                                                    # And skip the Loop
+                $FileName = $DownloadFile[$link.IndexOf("$uri")]                                            # use this, instead of trying to extract a name from the link
 
             }
             
@@ -81,6 +79,8 @@ function Invoke-FileDownload {
 
         }
 
+        Write-Verbose "Downloading to File $FileName"
+        
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                             # Create a useable Download Path from the Extracted File Name and the Download Directory
         
         if (($FileName -match ".zip$") -and $UnZip) {                                                       # When the File-Extension matches .zip, then
