@@ -2,6 +2,18 @@
 
 This is a Module for Powershell, which, when imported, provides you with a single function, you can use, to Download direct File links to a specific directory.
 
+## Requirements
+
+    Microsoft.PowerShell.ThreadJob -> Newest Version
+        
+        This Module is what makes the Module differ from default Behavoir. Without Thread-jobs this whole thing would not work.
+
+### How to install
+
+Open Powershell and type the following Command
+
+    Install-Module Microsoft.Powershell.ThreadJob
+
 ## Why does this exist?
 
 Downloading files through the default Powershell way, (with "Invoke-WebRequest") is extremly slow. Using a special Technique you can increase the Download Speed by a factor of at least 10x.
