@@ -12,7 +12,7 @@ function Invoke-FileDownload {
     param(
 
         [Parameter(ValueFromPipeline = $true, Mandatory, Position = 0)]                         # Provide all links, from which you want to Download files. These must be direct File links.
-        [string]$links,
+        [string]$link,
 
         [Parameter(Mandatory, Position = 1)]                                                    # Provide the Folder to which you want to Download you files.
         [string]$DownloadDirectory,
@@ -61,7 +61,7 @@ function Invoke-FileDownload {
     
     [System.Console]::WriteLine("Downloading Files, from Specified links...")                           # Write this string to the Console
     
-    $Jobs = foreach ($uri in $links) {                                                                  # Send all "Job-Objects, created by the Loop to this variable"
+    $Jobs = foreach ($uri in $link) {                                                                  # Send all "Job-Objects, created by the Loop to this variable"
 
         $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                    # Get the File Name, from the link
 
