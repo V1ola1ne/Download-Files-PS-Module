@@ -21,6 +21,9 @@ If you Remove everything around it and just use the Core Methods, you can Downlo
     [-UnZip]
         Using this parameter, the Script will unzip any File, with the .zip File extension. (May also work von .rar or .7z files, but untested)
 
+    -DownloadFile <string> 
+        This is the Name of the Donwloaded file, in your File-System. Usefull when the function is unable to get an Name from the link
+
 ### Usage
 
 If you have a direct file link, use the -link and -DownloadDirectory parameters to get Download the File from the Direct file link
