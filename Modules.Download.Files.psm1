@@ -20,7 +20,7 @@ function Invoke-FileDownload {
         [switch]$UnZip,                                                                          # If this Parameter is Specified, .Zip Files will be automatically unzipped
 
         [string]$DownloadFile
-        
+
         )
 
 
@@ -111,7 +111,7 @@ function Invoke-FileDownload {
         }
     }
     
-    $Jobs | Wait-Job                                                                                    # Wait for all Jobs to finish Downloading. This is not strictly necessary, but will stop you from using the Files in other Scripts
+    $null = $Jobs | Wait-Job                                                                            # Wait for all Jobs to finish Downloading. This is not strictly necessary, but will stop you from using the Files in other Scripts
     
     [System.Console]::WriteLine("All Files have been Donwloaded. Please checkout $DownloadDirectory...")# Please check if the File Download was successfull
 
