@@ -19,6 +19,7 @@ function Invoke-FileDownload {
 
         [switch]$UnZip                                                                          # If this Parameter is Specified, .Zip Files will be automatically unzipped
 
+        [string]$DownloadFile
         )
 
 
@@ -61,12 +62,26 @@ function Invoke-FileDownload {
     
     [System.Console]::WriteLine("Downloading Files, from Specified links...")                           # Write this string to the Console
     
-    $Jobs = foreach ($uri in $link) {                                                                  # Send all "Job-Objects, created by the Loop to this variable"
+    $Jobs = foreach ($uri in $link) {                                                                   # Send all "Job-Objects, created by the Loop to this variable"
 
-        $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                    # Get the File Name, from the link
+        if ($DownloadFile) {                                                                            # If Direct Export Name is given
+
+            $FileName = $DownloadFile                                                                   # use this, instead of trying to extract a name from the link
+        
+        } else {
+
+            $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                # Get the File Name, from the link
+
+            if ($FileName -match ".7z\?") {                                                             # If a File Link matches the Pattern ".7z?" do this:
+        
+                $FileName = ($FileName -split "\?")[0]                                                  # Split the File at the QuestionMark and Select only the First Part of this
+        
+            }
+
+        }
 
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                         # Create a useable Download Path from the Extracted File Name and the Download Directory
-
+        
         if (($FileName -match ".zip$") -and $UnZip) {                                                   # When the File-Extension matches .zip do this:
 
             try {
