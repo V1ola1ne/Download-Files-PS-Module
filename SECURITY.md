@@ -1,8 +1,9 @@
 # Security Policy
 
 I will only make Security fixes to supported Versions.
-You can write your own Issue or use the provided template
 However you may write your own fixes and create a Pull Request to <Branch>
+
+  You can write your own Issue or use the provided template
 
 ## Supported Versions
 
