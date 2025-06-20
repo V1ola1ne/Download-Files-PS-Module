@@ -113,6 +113,6 @@ function Invoke-FileDownload {
     
     $null = $Jobs | Wait-Job                                                                            # Wait for all Jobs to finish Downloading. This is not strictly necessary, but will stop you from using the Files in other Scripts
     
-    [System.Console]::WriteLine("All Files have been Donwloaded. Please checkout $DownloadDirectory...")# Please check if the File Download was successfull
+    [System.Console]::WriteLine("`nAll Files have been Donwloaded. Please checkout '$DownloadDirectory' ...")# Please check if the File Download was successfull
 
 }
