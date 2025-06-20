@@ -11,7 +11,7 @@ function Invoke-FileDownload {
         [Parameter(Mandatory, Position = 1)]                                                    # Provide the Folder to which you want to Download you files.
         [string]$DownloadDirectory,
 
-        [switch]$UnZip,                                                                          # If this Parameter is Specified, .Zip Files will be automatically unzipped
+        [switch]$UnZip,                                                                         # If this Parameter is Specified, .Zip Files will be automatically unzipped
 
         [string]$DownloadFile
 
@@ -27,15 +27,15 @@ function Invoke-FileDownload {
             
             return Start-ThreadJob {                                                                    # Initialize a thread job and return it
                 
-                $uri = $Using:uri                                                                       # Make Method Parameters usable in Job
+                $uri = $Using:uri                                                                       # Make Method Parameters usable in Job.
                 
                 $DownloadPath = $Using:DownloadPath
                 
-                Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                      # Start the Web Request and send it to the Specified Path
+                Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                      # Start the Web Request and send it to the Specified Path, then
 
                 Expand-Archive -Path $DownloadPath -DestinationPath $DownloadPath.Replace(".zip", '')   # Extract the Archive to a Folder, which is derived from the File Name
                 
-                [System.IO.File]::Delete("$DownloadPath")                                               # Remove the downloaded Zip File and only leave the new Folder
+                [System.IO.File]::Delete("$DownloadPath")                                               # And remove the downloaded Zip File and only leave the new Folder
             } 
 
         }
@@ -44,7 +44,7 @@ function Invoke-FileDownload {
 
             return Start-ThreadJob {                                                                    # Initialize a thread job and return it
                 
-                $uri = $Using:uri                                                                       # Make Method Parameters usable in Job
+                $uri = $Using:uri                                                                       # Make Method Parameters usable in Job.
                 
                 $DownloadPath = $Using:DownloadPath
                 
@@ -60,14 +60,24 @@ function Invoke-FileDownload {
     $Jobs = foreach ($uri in $link) {                                                                   # Send all "Job-Objects, created by the Loop to this variable"
 
         if ($DownloadFile) {                                                                            # If Direct Export Name is given
+            
+            foreach ($Name in $DownloadFile) {                                                          # go through each Name, in $DownloadFile
+                
+                if (-not [System.IO.File]::Exists("$DownloadDirectory\$Name")) {                        # And if a File with the specified File Name does not already Exist
 
-            $FileName = $DownloadFile                                                                   # use this, instead of trying to extract a name from the link
-        
+                    $FileName = $DownloadFile                                                           # use this, instead of trying to extract a name from the link
+
+                    continue                                                                            # And skip the Loop
+
+                }
+
+            }
+            
         } else {
 
-            $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                # Get the File Name, from the link
+            $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                # Get the File Name, from the link.
 
-            if ($FileName -match ".7z\?") {                                                             # If a File Link matches the Pattern ".7z?" do this:
+            if ($FileName -match ".7z\?") {                                                             # If a File Link matches the Pattern ".7z?", then
         
                 $FileName = ($FileName -split "\?")[0]                                                  # Split the File at the QuestionMark and Select only the First Part of this
         
@@ -77,11 +87,11 @@ function Invoke-FileDownload {
 
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                         # Create a useable Download Path from the Extracted File Name and the Download Directory
         
-        if (($FileName -match ".zip$") -and $UnZip) {                                                   # When the File-Extension matches .zip do this:
+        if (($FileName -match ".zip$") -and $UnZip) {                                                   # When the File-Extension matches .zip, then
 
             try {
 
-                [DownloadFile]::ZipDownload($uri, $DownloadPath)                                        # Use the ZipDownload() Method of the [DownloadFile] class with the Provided Parameters
+                [DownloadFile]::ZipDownload($uri, $DownloadPath)                                        # Use the ZipDownload() Method of the [DownloadFile] class with the Provided Parameters.
             
             }
             catch {

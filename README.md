@@ -30,7 +30,7 @@ If you Remove everything around it and just use the Core Methods, you can Downlo
     -DownloadDirectory <string>
         This is the Directory to which you want to Download the file.
 
-    [-UnZip]
+    -UnZip <switch>
         Using this parameter, the Script will unzip any File, with the .zip File extension. (May also work von .rar or .7z files, but untested)
 
     -DownloadFile <string> 
