@@ -21,7 +21,7 @@
     Description = 'This provides the (almost) fastest Way to Download Files trough Powershell'
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = 'Invoke-FileDownload'
+    FunctionsToExport = @('Invoke-FileDownload')
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport = @()
@@ -29,6 +29,6 @@
     # Variables to export from this module
     AliasesToExport = @()
 
-    # Modules Required to Wokr
+    # Modules Required to Work
     RequiredModules = @('Microsoft.PowerShell.ThreadJob')
 }
