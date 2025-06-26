@@ -40,5 +40,10 @@ If you Remove everything around it and just use the Core Methods, you can Downlo
 
 If you have a direct file link, use the -link and -DownloadDirectory parameters to get Download the File from the Direct file link
 
-Keep in Mind that the Module currently only works with files, to which you don't need any Authentication
+Keep in Mind that the Module currently only works with files, for which you don't need any Authentication
 Adding the Option for Authentication may come in Future Releases.
+
+Also keep in Mind, that the Module is currently not singed in any way, which means, that you may have to circumvent default windows Protections
+To do so use
+
+    Set-ExecutionPolicy
