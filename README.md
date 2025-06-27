@@ -8,11 +8,39 @@ This is a Module for Powershell, which, when imported, provides you with a singl
         
         This Module is what makes the Module differ from default Behavoir. Without Thread-jobs this whole thing would not work.
 
-### How to install
+### How to install requirements
 
 Open Powershell and type the following Command
 
     Install-Module Microsoft.Powershell.ThreadJob
+
+
+## How to install
+
+After Downloading the Release, extract it.
+You can no do tow things:
+
+either
+1. Open Powershell and type: `$env:PSModulePath`
+This will display the Folders, from which powershell is able to directly import Modules
+Go to one off the Specified folder and inside of it, create an new folder named
+`Modules.Download.Files`
+place `Modules.Download.Files.psm1` and `Modules.Download.Files.psd1` inside this Folder.
+Now you should be able to import the module by using:
+`Import-Module Modules.Download.Files`
+
+or
+
+2. Do what-ever you want with the files.
+   Just remember when importing the Module you have to import it like this:
+   `Import-Module YOURMODULEPATH\Modules.Download.Files.psd1`
+
+
+### Additional Info
+
+You could add the Import command to an exisisting Profile, or create a new one, which
+contains it.
+Do this, when you want to make sure, you always have access to the provided function
 
 ## Why does this exist?
 
