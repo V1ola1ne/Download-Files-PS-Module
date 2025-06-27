@@ -27,13 +27,15 @@ Go to one off the Specified folder and inside of it, create an new folder named\
 `Modules.Download.Files`\
 Place `Modules.Download.Files.psm1` and `Modules.Download.Files.psd1` inside this Folder.\
 Now you should be able to import the module by using:\
-`Import-Module Modules.Download.Files`
+
+       Import-Module Modules.Download.Files
 
 or
 
 2. Do what-ever you want with the files.
    Just remember when importing the Module you have to import it like this:
-   `Import-Module YOURMODULEPATH\Modules.Download.Files.psd1`
+
+       Import-Module YOURMODULEPATH\Modules.Download.Files.psd1
 
 
 ### Additional Info
