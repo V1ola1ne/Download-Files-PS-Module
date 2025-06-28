@@ -26,7 +26,7 @@ This will display the Folders, from which powershell is able to directly import 
 Go to one off the Specified folder and inside of it, create an new folder named\
 `Modules.Download.Files`\
 Place `Modules.Download.Files.psm1` and `Modules.Download.Files.psd1` inside this Folder.\
-Now you should be able to import the module by using:\
+Now you should be able to import the module by using:
 
        Import-Module Modules.Download.Files
 
