@@ -21,12 +21,15 @@ After Downloading the Release, extract it.
 You can no do tow things:
 
 either
-1. Open Powershell and type: `$env:PSModulePath`\
-This will display the Folders, from which powershell is able to directly import Modules
-Go to one off the Specified folder and inside of it, create an new folder named\
-`Modules.Download.Files`\
-Place `Modules.Download.Files.psm1` and `Modules.Download.Files.psd1` inside this Folder.\
-Now you should be able to import the module by using:
+1. Open Powershell and type:
+
+       env:PSModulePath
+   
+    This will display the Folders, from which powershell is able to directly import Modules
+    Go to one off the Specified folder and inside of it, create an new folder named\
+    `Modules.Download.Files`\
+    Place `Modules.Download.Files.psm1` and `Modules.Download.Files.psd1` inside this Folder.\
+    Now you should be able to import the module by using:
 
        Import-Module Modules.Download.Files
 
