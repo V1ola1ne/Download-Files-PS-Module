@@ -1,4 +1,4 @@
-#Requires -Modules Microsoft.PowerShell.ThreadJob
+#Requires -Modules Microsoft.PowerShell.ThreadJob -Version 2.2.0
 
 function Invoke-FileDownload {
 
