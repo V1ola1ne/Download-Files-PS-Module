@@ -2,6 +2,8 @@
 
 This is a Module for Powershell, which, when imported, provides you with a single function, you can use, to Download direct File links to a specific directory.
 
+With the Release of Version 1.0.1 the module `Modules.Downloads.Files` is available at the PSGallery, for easier download.
+
 ## Requirements
 
     Microsoft.PowerShell.ThreadJob -> Newest Version
@@ -16,6 +18,16 @@ Open Powershell and type the following Command
 
 
 ## How to install
+
+
+### Since v1.0.1:
+
+You can now very easily install the module with a simple powershell command: 
+
+    Install-Module -Name Modules.Download.Files
+
+
+### Other Options
 
 After Downloading the Release, extract it.
 You can no do tow things:
