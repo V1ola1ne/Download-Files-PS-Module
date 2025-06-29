@@ -15,7 +15,7 @@ function Invoke-FileDownload {
 
         [array]$DownloadFile
 
-        )
+    )
 
 
     Import-Module Microsoft.PowerShell.ThreadJob                                                                # Import the ThreadJob Module to ensure Execution
@@ -36,6 +36,7 @@ function Invoke-FileDownload {
                 Expand-Archive -Path $DownloadPath -DestinationPath $DownloadPath.Replace(".zip", '')           # Extract the Archive to a Folder, which is derived from the File Name
                 
                 [System.IO.File]::Delete("$DownloadPath")                                                       # And remove the downloaded Zip File and only leave the new Folder
+
             } 
 
         }
@@ -49,17 +50,19 @@ function Invoke-FileDownload {
                 $DownloadPath = $Using:DownloadPath
                 
                 Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                              # Start the Web Request and send it to the Specified Path
+
             }
 
         }
+
     }
 
     
-    [System.Console]::WriteLine("Downloading Files, from Specified links...")                                   # Write this string to the Console
+    [System.Console]::WriteLine("Downloading files, from specified links...")                                   # Write this string to the Console
     
     $Jobs = foreach ($uri in $link) {                                                                           # Send all "Job-Objects, created by the Loop to this variable"
         
-        Write-Verbose "Attempt to Download from '$uri'"
+        Write-Verbose "Attempt to download from '$uri'"
 
         if ($null -ne $DownloadFile[$link.IndexOf("$uri")]) {                                                   # If a Name exist at the current Link index
         
@@ -81,7 +84,7 @@ function Invoke-FileDownload {
 
         }
 
-        Write-Verbose "Downloading to File '$FileName'"
+        Write-Verbose "Downloading to file '$FileName'"
         
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                                 # Create a useable Download Path from the Extracted File Name and the Download Directory
         
@@ -110,11 +113,13 @@ function Invoke-FileDownload {
                 throw $Error                                                                                    # if an error occurs (which should never happen), end the Script and show all Errors that have since occured
             
             }
+
         }
+
     }
     
     $null = $Jobs | Wait-Job                                                                                    # Wait for all Jobs to finish Downloading. This is not strictly necessary, but will stop you from using the Files in other Scripts
     
-    [System.Console]::WriteLine("`nAll Files have been Donwloaded. Please checkout '$DownloadDirectory' ...")   # Please check if the File Download was successfull
+    [System.Console]::WriteLine("`nAll files have been downloaded. Please checkout '$DownloadDirectory' ...")   # Please check if the File Download was successfull
 
 }
