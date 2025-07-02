@@ -35,7 +35,7 @@ function Invoke-FileDownload {
 
                 try {
                 
-                    Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                          # Start the Web Request and send it to the Specified Path, then  
+                    Invoke-WebRequest -Uri $uri -OutFile $DownloadPath  -ErrorAction Stop                       # Start the Web Request and send it to the Specified Path, then  
                 
                 }
                 catch {
@@ -47,8 +47,8 @@ function Invoke-FileDownload {
 
                 try {
 
-                    Expand-Archive -Path $DownloadPath -DestinationPath $DownloadPath.Replace(".zip", '')       # Extract the Archive to a Folder, which is derived from the File Name
-                
+                    Expand-Archive -Path $DownloadPath -DestinationPath $DownloadPath.Replace(".zip", '') -ErrorAction Stop
+                                                                                                                # Extract the Archive to a Folder, which is derived from the File Name
                 }
                 catch {
                 
@@ -75,7 +75,7 @@ function Invoke-FileDownload {
                 
                 try {
 
-                    Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                          # Start the Web Request and send it to the Specified Path, then  
+                    Invoke-WebRequest -Uri $uri -OutFile $DownloadPath -ErrorAction Stop                        # Start the Web Request and send it to the Specified Path, then  
 
                 }
                 catch {
