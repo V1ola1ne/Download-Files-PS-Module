@@ -80,7 +80,7 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n`n$($_.Exception.Message)`n$($_.Expection.GetType().FullName)`n`n`n")                                                # Write The Encountered Error
+                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n`n$($_.Exception.Message)`n$($_.Expection.GetType().FullName)`n`n`n")
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
