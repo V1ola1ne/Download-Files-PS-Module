@@ -40,7 +40,9 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n`n$($_.Exception.Message)`n$($_.Expection.GetType().FullName)`n$($_.Expection.ErrorRecord.InvocationInfo.PositionMessage)`n`n`n") 
+                    [System.IO.File]::AppendAllText($tmp, "`n`nAn Error Occured, while downloading to $DownloadPath") 
+                    [System.Object]$record = $_.Exception.ErrorRecord 
+                    $record | out-string >> $tmp
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file 
                 
                 }
@@ -52,7 +54,9 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while Extracting from $DownloadPath to $($DownloadPath.Replace(".zip", ''))`n`n$($_.Exception.Message)`n$($_.Expection.GetType().FullName)`n$($_.Expection.ErrorRecord.InvocationInfo.PositionMessage)`n`n`n") 
+                    [System.IO.File]::AppendAllText($tmp, "`n`nAn Error Occured, while Extracting from $DownloadPath to $($DownloadPath.Replace(".zip", ''))") 
+                    [System.Object]$record = $_.Exception.ErrorRecord 
+                    $record | out-string >> $tmp
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
@@ -80,7 +84,9 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n`n$($_.Exception.Message)`n$($_.Expection.GetType().FullName)`n$($_.Expection.ErrorRecord.InvocationInfo.PositionMessage)`n`n`n")
+                    [System.IO.File]::AppendAllText($tmp, "`n`nAn Error Occured, while downloading to $DownloadPath")
+                    [System.Object]$record = $_.Exception.ErrorRecord 
+                    $record | out-string >> $tmp
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
