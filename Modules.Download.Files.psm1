@@ -40,7 +40,7 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "`n`nAn Error Occured, while downloading to $DownloadPath") 
+                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n") 
                     [System.Object]$record = $_.Exception.ErrorRecord 
                     $record | out-string >> $tmp
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file 
@@ -54,7 +54,7 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "`n`nAn Error Occured, while Extracting from $DownloadPath to $($DownloadPath.Replace(".zip", ''))") 
+                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while Extracting from $DownloadPath to $($DownloadPath.Replace(".zip", ''))`n") 
                     [System.Object]$record = $_.Exception.ErrorRecord 
                     $record | out-string >> $tmp
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file
@@ -84,7 +84,7 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "`n`nAn Error Occured, while downloading to $DownloadPath")
+                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n")
                     [System.Object]$record = $_.Exception.ErrorRecord 
                     $record | out-string >> $tmp
                     exit                                                                                        # When an Error has occured, the Script will write its information to a temporary file
