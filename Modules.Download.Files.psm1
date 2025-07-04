@@ -33,6 +33,8 @@ function Invoke-FileDownload {
                 
                 $DownloadPath = $Using:DownloadPath
 
+                $tmp = $Using:tmp
+
                 try {
                 
                     Invoke-WebRequest -Uri $uri -OutFile $DownloadPath  -ErrorAction Stop                       # Start the Web Request and send it to the Specified Path, then  
