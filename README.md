@@ -4,6 +4,12 @@ This is a Module for Powershell, which, when imported, provides you with a singl
 
 With the Release of Version 1.0.1 the module `Modules.Downloads.Files` is available at the PSGallery, for easier download.
 
+## !!! Important information !!!
+
+Invoke-Webrequest seems to perform a lot better, under certain conditions.\
+Further investigation might be needed.\
+Current suspicion is, that setting scheduling to prioritize background processes in advanced system Settings, on Windows, might be the cause of this.
+
 ## Requirements
 
     Microsoft.PowerShell.ThreadJob -> Newest Version
