@@ -146,8 +146,9 @@ function Invoke-FileDownload {
     if ($size -gt 0) {                                                                                          # Test, if errors have been added.
 
         $errorlist = [System.IO.File]::ReadAllLines($tmp)                                                       # if so, read all contents and
-        [System.Console]::ForegroundColor = [System.ConsoleColor]::Red
-        [System.Console]::WriteLine("the Following Errors have occured during execution`n$errorlist")           # Display this message, with all Error information
+        [System.Console]::WriteLine("the Following Errors have occured during execution`n")                     # Display this message
+        [System.Console]::ForegroundColor = [System.ConsoleColor]::Red                                          
+        [System.Console]::WriteLine("$errorlist")                                                               # Display all Error information
         [System.Console]::ResetColor()
 
     } else {
