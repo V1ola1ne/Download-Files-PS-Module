@@ -150,10 +150,12 @@ function Invoke-FileDownload {
         [System.Console]::WriteLine("the Following Errors have occured during execution`n$errorlist")           # Display this message, with all Error information
         [System.Console]::ResetColor()
 
+    } else {
+
+        [System.Console]::WriteLine("`nAll files have been downloaded. Please checkout '$DownloadDirectory' ...")   # Please check if the File Download was successfull
+        
     }
 
     $null = [System.IO.File]::Delete($tmp)                                                                      # Silently Remove the Temporary File
-
-    [System.Console]::WriteLine("`nAll files have been downloaded. Please checkout '$DownloadDirectory' ...")   # Please check if the File Download was successfull
 
 }
