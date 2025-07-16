@@ -66,9 +66,10 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n") 
-                    [System.Object]$record = $_.Exception.ErrorRecord 
-                    $record | out-string >> $tmp                                                                # When an Error has occured, the Script will write its information to a temporary file 
+                    [System.Object]$Message = $_.Exception.Message
+                    [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
+                    [System.Object]$record = @($Message, $PositionMessage)
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)")                            # When an Error has occured, the Script will write its information to a temporary file 
                 
                 }
 
@@ -79,9 +80,10 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while Extracting from $DownloadPath to $($DownloadPath.Replace(".zip", ''))`n") 
-                    [System.Object]$record = $_.Exception.ErrorRecord 
-                    $record | out-string >> $tmp                                                                # When an Error has occured, the Script will write its information to a temporary file
+                    [System.Object]$Message = $_.Exception.Message
+                    [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
+                    [System.Object]$record = @($Message, $PositionMessage)
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)")                            # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
                 
@@ -108,9 +110,10 @@ function Invoke-FileDownload {
                 }
                 catch {
                 
-                    [System.IO.File]::AppendAllText($tmp, "An Error Occured, while downloading to $DownloadPath`n")
-                    [System.Object]$record = $_.Exception.ErrorRecord 
-                    $record | out-string >> $tmp                                                                # When an Error has occured, the Script will write its information to a temporary file
+                    [System.Object]$Message = $_.Exception.Message
+                    [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
+                    [System.Object]$record = @($Message, $PositionMessage)
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)")                            # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
 
@@ -173,10 +176,10 @@ function Invoke-FileDownload {
 
     if ($size -gt 0) {                                                                                          # Test, if errors have been added.
 
-        $errorlist = [System.IO.File]::ReadAllLines($tmp)                                                       # if so, read all contents and
-        [System.Console]::WriteLine("the Following Errors have occured during execution`n")                     # Display this message
+        $errorlist = [System.IO.File]::ReadAllText($tmp)                                                        # if so, read all contents and
+        [System.Console]::WriteLine("Download could not finish. Some Errors have occured`n")                    # Display this message
         [System.Console]::ForegroundColor = [System.ConsoleColor]::Red                                          
-        [System.Console]::WriteLine("$errorlist")                                                               # Display all Error information
+        [System.Console]::Write("$errorlist")                                                                   # Display all Error information
         [System.Console]::ResetColor()
 
     } else {
