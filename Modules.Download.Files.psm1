@@ -1,5 +1,29 @@
 #Requires -Modules Microsoft.PowerShell.ThreadJob
 
+
+function Set-FileNameUnspecified {
+    
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, Position = 0)]
+        [string]
+        $InputObject
+    )
+
+    $FileName = ($uri -split "/")[$_.Length -1]                                                         # Get the File Name, from the link.
+
+    if ($FileName -match ".7z\?") {                                                                     # If a File Link matches the Pattern ".7z?", then
+        
+        $FileName = ($FileName -split "\?")[0]                                                          # Split the File at the QuestionMark and Select only the First Part of this
+        
+    }
+
+    return $FileName
+
+
+}
+
+
 function Invoke-FileDownload {
 
     [CmdletBinding()]
@@ -103,25 +127,29 @@ function Invoke-FileDownload {
         
         Write-Verbose "Attempt to download from '$uri'"
 
-        if ($DownloadFile[$link.IndexOf("$uri")]) {                                                             # If a Name exist at the current Link index
+        if ($DownloadFile) {
+
+            if ($DownloadFile[$link.IndexOf("$uri")]) {                                                             # If a Name exist at the current Link index
         
-            if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
+                if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
 
-                $FileName = $DownloadFile[$link.IndexOf("$uri")]                                                # use this, instead of trying to extract a name from the link
+                    $FileName = $DownloadFile[$link.IndexOf("$uri")]                                                # use this, instead of trying to extract a name from the link
 
-            }
+                }
             
-        } else {                                                                                                # If an Index match could not be found (i.e. no further Name is given)
+            } else {                                                                                                # If an Index match could not be found (i.e. no further Name is given)
                     
-            $FileName = ($uri -split "/")[$_.Length -1]                                                         # Get the File Name, from the link.
+                $FileName = Set-FileNameUnspecified -InputObject $uri
 
-            if ($FileName -match ".7z\?") {                                                                     # If a File Link matches the Pattern ".7z?", then
-        
-                $FileName = ($FileName -split "\?")[0]                                                          # Split the File at the QuestionMark and Select only the First Part of this
-        
             }
+
+        } else {
+
+            $FileName = Set-FileNameUnspecified -InputObject $uri
 
         }
+
+        
 
         Write-Verbose "Downloading to file '$FileName'"
         
