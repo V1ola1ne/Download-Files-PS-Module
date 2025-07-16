@@ -103,7 +103,7 @@ function Invoke-FileDownload {
         
         Write-Verbose "Attempt to download from '$uri'"
 
-        if ($null -ne $DownloadFile[$link.IndexOf("$uri")]) {                                                   # If a Name exist at the current Link index
+        if ($DownloadFile[$link.IndexOf("$uri")]) {                                                             # If a Name exist at the current Link index
         
             if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
 
@@ -113,7 +113,7 @@ function Invoke-FileDownload {
             
         } else {                                                                                                # If an Index match could not be found (i.e. no further Name is given)
                     
-            $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                        # Get the File Name, from the link.
+            $FileName = ($uri -split "/")[$_.Length -1]                                                         # Get the File Name, from the link.
 
             if ($FileName -match ".7z\?") {                                                                     # If a File Link matches the Pattern ".7z?", then
         
@@ -127,7 +127,7 @@ function Invoke-FileDownload {
         
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                                 # Create a useable Download Path from the Extracted File Name and the Download Directory
         
-        if (($FileName -match ".zip$") -and $UnZip) {                                                           # When the File-Extension matches .zip, then
+        if ($FileName -match ".zip$" -and $UnZip) {                                                             # When the File-Extension matches .zip, then
 
             [DownloadFile]::ZipDownload($uri, $DownloadPath)                                                    # Use the ZipDownload() Method of the [DownloadFile] class with the Provided Parameters.
 
