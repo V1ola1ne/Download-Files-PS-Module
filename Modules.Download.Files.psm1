@@ -69,7 +69,7 @@ function Invoke-FileDownload {
                     [System.Object]$Message = $_.Exception.Message
                     [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
                     [System.Object]$record = @($Message, $PositionMessage)
-                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)")                            # When an Error has occured, the Script will write its information to a temporary file 
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)`n")                            # When an Error has occured, the Script will write its information to a temporary file 
                 
                 }
 
@@ -83,7 +83,7 @@ function Invoke-FileDownload {
                     [System.Object]$Message = $_.Exception.Message
                     [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
                     [System.Object]$record = @($Message, $PositionMessage)
-                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)")                            # When an Error has occured, the Script will write its information to a temporary file
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)`n")                            # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
                 
@@ -113,7 +113,7 @@ function Invoke-FileDownload {
                     [System.Object]$Message = $_.Exception.Message
                     [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
                     [System.Object]$record = @($Message, $PositionMessage)
-                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)")                            # When an Error has occured, the Script will write its information to a temporary file
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)`n")                            # When an Error has occured, the Script will write its information to a temporary file
                 
                 }
 
