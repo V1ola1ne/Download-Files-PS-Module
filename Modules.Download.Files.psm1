@@ -1,5 +1,29 @@
 #Requires -Modules Microsoft.PowerShell.ThreadJob
 
+
+function Set-FileNameUnspecified {
+    
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory, Position = 0)]
+        [string]
+        $InputObject
+    )
+
+    $FileName = ($uri -split "/")[$_.Length -1]                                                         # Get the File Name, from the link.
+
+    if ($FileName -match ".7z\?") {                                                                     # If a File Link matches the Pattern ".7z?", then
+        
+        $FileName = ($FileName -split "\?")[0]                                                          # Split the File at the QuestionMark and Select only the First Part of this
+        
+    }
+
+    return $FileName
+
+
+}
+
+
 function Invoke-FileDownload {
 
     [CmdletBinding()]
@@ -20,6 +44,8 @@ function Invoke-FileDownload {
 
     Import-Module Microsoft.PowerShell.ThreadJob                                                                # Import the ThreadJob Module to ensure Execution
 
+    $tmp = New-TemporaryFile                                                                                    # Create the Temporary File for error handling
+
 
     class DownloadFile {                                                                                        # Class which contains Download Methods
 
@@ -30,10 +56,36 @@ function Invoke-FileDownload {
                 $uri = $Using:uri                                                                               # Make Method Parameters usable in Job.
                 
                 $DownloadPath = $Using:DownloadPath
-                
-                Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                              # Start the Web Request and send it to the Specified Path, then
 
-                Expand-Archive -Path $DownloadPath -DestinationPath $DownloadPath.Replace(".zip", '')           # Extract the Archive to a Folder, which is derived from the File Name
+                $tmp = $Using:tmp
+
+                try {
+                
+                    Invoke-WebRequest -Uri $uri -OutFile $DownloadPath  -ErrorAction Stop                       # Start the Web Request and send it to the Specified Path, then  
+                
+                }
+                catch {
+                
+                    [System.Object]$Message = $_.Exception.Message
+                    [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
+                    [System.Object]$record = @($Message, $PositionMessage)
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)`n")                            # When an Error has occured, the Script will write its information to a temporary file 
+                
+                }
+
+                try {
+
+                    Expand-Archive -Path $DownloadPath -DestinationPath $DownloadPath.Replace(".zip", '') -ErrorAction Stop
+                                                                                                                # Extract the Archive to a Folder, which is derived from the File Name
+                }
+                catch {
+                
+                    [System.Object]$Message = $_.Exception.Message
+                    [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
+                    [System.Object]$record = @($Message, $PositionMessage)
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)`n")                            # When an Error has occured, the Script will write its information to a temporary file
+                
+                }
                 
                 [System.IO.File]::Delete("$DownloadPath")                                                       # And remove the downloaded Zip File and only leave the new Folder
 
@@ -48,15 +100,29 @@ function Invoke-FileDownload {
                 $uri = $Using:uri                                                                               # Make Method Parameters usable in Job.
                 
                 $DownloadPath = $Using:DownloadPath
+
+                $tmp = $Using:tmp
                 
-                Invoke-WebRequest -Uri $uri -OutFile $DownloadPath                                              # Start the Web Request and send it to the Specified Path
+                try {
+
+                    Invoke-WebRequest -Uri $uri -OutFile $DownloadPath -ErrorAction Stop                        # Start the Web Request and send it to the Specified Path, then  
+
+                }
+                catch {
+                
+                    [System.Object]$Message = $_.Exception.Message
+                    [System.Object]$PositionMessage = $_.InvocationInfo.PositionMessage
+                    [System.Object]$record = @($Message, $PositionMessage)
+                    [System.IO.File]::AppendAllText($tmp, "$($record | out-string)`n")                            # When an Error has occured, the Script will write its information to a temporary file
+                
+                }
 
             }
 
         }
 
     }
-
+    
     
     [System.Console]::WriteLine("Downloading files, from specified links...")                                   # Write this string to the Console
     
@@ -64,55 +130,41 @@ function Invoke-FileDownload {
         
         Write-Verbose "Attempt to download from '$uri'"
 
-        if ($null -ne $DownloadFile[$link.IndexOf("$uri")]) {                                                   # If a Name exist at the current Link index
+        if ($DownloadFile) {
+
+            if ($DownloadFile[$link.IndexOf("$uri")]) {                                                             # If a Name exist at the current Link index
         
-            if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
+                if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
 
-                $FileName = $DownloadFile[$link.IndexOf("$uri")]                                                # use this, instead of trying to extract a name from the link
+                    $FileName = $DownloadFile[$link.IndexOf("$uri")]                                                # use this, instead of trying to extract a name from the link
 
-            }
+                }
             
-        } else {                                                                                                # If an Index match could not be found (i.e. no further Name is given)
+            } else {                                                                                                # If an Index match could not be found (i.e. no further Name is given)
                     
-            $FileName = ($uri -split "/")[(($uri -split "/").Length -1)]                                        # Get the File Name, from the link.
+                $FileName = Set-FileNameUnspecified -InputObject $uri
 
-            if ($FileName -match ".7z\?") {                                                                     # If a File Link matches the Pattern ".7z?", then
-        
-                $FileName = ($FileName -split "\?")[0]                                                          # Split the File at the QuestionMark and Select only the First Part of this
-        
             }
+
+        } else {
+
+            $FileName = Set-FileNameUnspecified -InputObject $uri
 
         }
+
+        
 
         Write-Verbose "Downloading to file '$FileName'"
         
         $DownloadPath = $DownloadDirectory, $FileName -join "\"                                                 # Create a useable Download Path from the Extracted File Name and the Download Directory
         
-        if (($FileName -match ".zip$") -and $UnZip) {                                                           # When the File-Extension matches .zip, then
+        if ($FileName -match ".zip$" -and $UnZip) {                                                             # When the File-Extension matches .zip, then
 
-            try {
-
-                [DownloadFile]::ZipDownload($uri, $DownloadPath)                                                # Use the ZipDownload() Method of the [DownloadFile] class with the Provided Parameters.
-            
-            }
-            catch {
-            
-                throw $Error                                                                                    # if an error occurs (which should never happen), end the Script and show all Errors that have since occured
-            
-            }
+            [DownloadFile]::ZipDownload($uri, $DownloadPath)                                                    # Use the ZipDownload() Method of the [DownloadFile] class with the Provided Parameters.
 
         } else {
 
-            try {
-            
-                [DownloadFile]::FileDownload($uri, $DownloadPath)                                               # Use the FileDownload() Method of the [DownloadFile] class with the Provided Parameters
-            
-            }
-            catch {
-            
-                throw $Error                                                                                    # if an error occurs (which should never happen), end the Script and show all Errors that have since occured
-            
-            }
+            [DownloadFile]::FileDownload($uri, $DownloadPath)                                                   # Use the FileDownload() Method of the [DownloadFile] class with the Provided Parameters
 
         }
 
@@ -120,6 +172,22 @@ function Invoke-FileDownload {
     
     $null = $Jobs | Wait-Job                                                                                    # Wait for all Jobs to finish Downloading. This is not strictly necessary, but will stop you from using the Files in other Scripts
     
-    [System.Console]::WriteLine("`nAll files have been downloaded. Please checkout '$DownloadDirectory' ...")   # Please check if the File Download was successfull
+    $size = [System.IO.FileInfo]::new($tmp).Length                                                              # Get File Information of the Temporary File
+
+    if ($size -gt 0) {                                                                                          # Test, if errors have been added.
+
+        $errorlist = [System.IO.File]::ReadAllText($tmp)                                                        # if so, read all contents and
+        [System.Console]::WriteLine("Download could not finish. Some Errors have occured`n")                    # Display this message
+        [System.Console]::ForegroundColor = [System.ConsoleColor]::Red                                          
+        [System.Console]::Write("$errorlist")                                                                   # Display all Error information
+        [System.Console]::ResetColor()
+
+    } else {
+
+        [System.Console]::WriteLine("`nAll files have been downloaded. Please checkout '$DownloadDirectory' ...")   # Please check if the File Download was successfull
+        
+    }
+
+    $null = [System.IO.File]::Delete($tmp)                                                                      # Silently Remove the Temporary File
 
 }
