@@ -46,6 +46,7 @@ function Invoke-FileDownload {
 
     $tmp = New-TemporaryFile                                                                                    # Create the Temporary File for error handling
 
+    $def = ${function:Get-FileNameFromURI}.ToString()
 
     class DownloadFile {                                                                                        # Class which contains Download Methods
   
@@ -58,6 +59,7 @@ function Invoke-FileDownload {
                 $tmp = $Using:tmp
                 $FileName =$Using:FileName
                 $UnZip = $Using:UnZip
+                ${function:Get-FileNameFromURI} = $Using:def
                 
                 try {
 
@@ -103,9 +105,18 @@ function Invoke-FileDownload {
                     $DownloadPath = $DownloadDirectory, $FileName -join '\'                                     # Create the Download Path
 
                     $FileContent = $Content
-                    $File = [System.IO.File]::Create("$DownloadPath")                                           # Create the File
-                    $File.Write($FileContent, 0, $FileContent.Length)                                           # Write the WebRequestContent to it
-                    $File.Close()                                                                               # Close the File, so that it can be used later
+
+                    if ($ContentType -notmatch "text/plain") {
+
+                        $File = [System.IO.File]::Create("$DownloadPath")                                           # Create the File
+                        $File.Write($FileContent, 0, $FileContent.Length)                                           # Write the WebRequestContent to it
+                        $File.Close()                                                                               # Close the File, so that it can be used later
+
+                    } elseif ($contentType -match "text/plain") {
+
+                        [System.IO.File]::WriteAllText($DownloadPath, "$FileContent")
+
+                    }
 
                     if ($contentType -match "application/zip" -and $UnZip) {                                    # if the unzip parameter is given and the .zip file Type was detected
 
