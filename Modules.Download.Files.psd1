@@ -17,7 +17,7 @@
     GUID = '476c926c-408b-41bf-9e23-6c00ca34e3f2'
 
     # Version number of this module.
-    ModuleVersion = '1.0.1'
+    ModuleVersion = '1.0.2'
 
     # Description of the functionality provided by this module
     Description = '
