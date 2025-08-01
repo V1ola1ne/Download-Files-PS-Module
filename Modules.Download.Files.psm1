@@ -106,13 +106,13 @@ function Invoke-FileDownload {
 
                     $FileContent = $Content
 
-                    if ($ContentType -notmatch "text/plain") {
+                    if ($ContentType -notmatch "text/") {
 
                         $File = [System.IO.File]::Create("$DownloadPath")                                           # Create the File
                         $File.Write($FileContent, 0, $FileContent.Length)                                           # Write the WebRequestContent to it
                         $File.Close()                                                                               # Close the File, so that it can be used later
 
-                    } elseif ($contentType -match "text/plain") {
+                    } elseif ($contentType -match "text/") {
 
                         [System.IO.File]::WriteAllText($DownloadPath, "$FileContent")
 
