@@ -17,7 +17,7 @@
     GUID = '476c926c-408b-41bf-9e23-6c00ca34e3f2'
 
     # Version number of this module.
-    ModuleVersion = '1.0.2'
+    ModuleVersion = '1.0.3'
 
     # Description of the functionality provided by this module
     Description = '
@@ -50,7 +50,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/V1ola1ne/Download-Files-PS-Module/releases/tag/v1.0.1'
+            ReleaseNotes = 'https://github.com/V1ola1ne/Download-Files-PS-Module/releases/tag/v1.0.3'
 
             # Prerelease string of this module
             # Prerelease = ''
