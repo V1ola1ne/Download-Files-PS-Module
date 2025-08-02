@@ -50,7 +50,7 @@ function Invoke-FileDownload {
 
     class DownloadFile {                                                                                        # Class which contains Download Methods
   
-        static [object] FileDownload([string]$uri, [string]$DownloadDirectory, [string]$FileName) {                                     # Method used, by Default
+        static [object] FileDownload([string]$uri, [string]$DownloadDirectory, [string]$FileName, [bool]$uzip) {                                     # Method used, by Default
 
             return Start-ThreadJob {                                                                            # Initialize a thread job and return it
                 
@@ -58,7 +58,7 @@ function Invoke-FileDownload {
                 $DownloadDirectory = $Using:DownloadDirectory
                 $tmp = $Using:tmp
                 $FileName =$Using:FileName
-                $UnZip = $Using:UnZip
+                $UnZip = $Using:uzip
                 ${function:Get-FileNameFromURI} = $Using:def
                 
                 try {
@@ -118,7 +118,7 @@ function Invoke-FileDownload {
 
                     }
 
-                    if ($contentType -match "application/zip" -and $UnZip) {                                    # if the unzip parameter is given and the .zip file Type was detected
+                    if ($FileName -match "zip$" -and $UnZip) {                                                      # if the unzip parameter is given and the .zip file Type was detected
 
                         try {
 
@@ -135,7 +135,7 @@ function Invoke-FileDownload {
                 
                          }
 
-                    } elseif ($contentType -match "application/.7z" -and $UnZip) {                                # if the unzip parameter is given and the .zip file Type was detected
+                    } elseif ($FileName -match "7z$" -and $UnZip) {                                               # if the unzip parameter is given and the .zip file Type was detected
 
                         try {
 
@@ -205,7 +205,7 @@ function Invoke-FileDownload {
 
         Write-Verbose "Starting Download..."
         
-        [DownloadFile]::FileDownload($uri, $DownloadDirectory, $FileName)                                       # Use the FileDownload() Method of the [DownloadFile] class with the Provided Parameters
+        [DownloadFile]::FileDownload($uri, $DownloadDirectory, $FileName, $UnZip)                               # Use the FileDownload() Method of the [DownloadFile] class with the Provided Parameters
 
     }
     
