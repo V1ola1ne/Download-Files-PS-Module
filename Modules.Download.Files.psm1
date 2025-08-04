@@ -10,6 +10,7 @@ function Get-FileNameFromURI {
         $InputObject
     )
 
+    $uri = $InputObject
     $FileName = ($uri -split "/")[$_.Length -1]                                                         # Get the File Name, from the link.
 
     if ($FileName -match ".7z\?") {                                                                     # If a File Link matches the Pattern ".7z?", then
@@ -228,5 +229,6 @@ function Invoke-FileDownload {
     }
 
     $null = [System.IO.File]::Delete($tmp)                                                                      # Silently Remove the Temporary File
+
 
 }
