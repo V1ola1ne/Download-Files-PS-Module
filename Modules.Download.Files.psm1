@@ -153,7 +153,6 @@ class DownloadFile {                                                            
                 }
 
                 $DownloadPath = $DownloadDirectory, $FileName -join '\'                                     # Create the Download Path
-
                 $FileContent = $Content
 
                 if ($ContentType -notmatch "text/") {
@@ -246,6 +245,7 @@ class DownloadFile {                                                            
 
                 }
 
+                
                 $DownloadPath = $DownloadDirectory, $FileName -join '\'                                     # Create the Download Path
                 $FileContent = $Content
 
@@ -422,6 +422,12 @@ function Invoke-FileDownload {
     )
 
     $def = ${function:Get-NameFromRequest}.ToString(), ${function:Get-FileNameFromURI}.ToString()
+
+    if (![System.IO.DirectoryInfo]::new("$DownloadDirectory").Exists) {
+
+        [System.IO.Directory]::CreateDirectory("$DownloadDirectory")
+
+    }
 
     [System.Console]::WriteLine("Downloading files, from specified links...")                                       # Write this string to the Console
     
