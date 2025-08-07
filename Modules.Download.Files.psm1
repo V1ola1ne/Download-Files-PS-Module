@@ -27,7 +27,6 @@ function Get-FileNameFromURI {
 
 function Get-NameFromInput {
 
-    [CmdletBinding()]
     param (
 
         [Parameter(ValueFromPipeline = $true, Mandatory, Position = 0)]
@@ -74,7 +73,7 @@ function Get-NameFromRequest {
     param (
 
         [Parameter(Mandatory)]
-        [object]$Headers,
+        [hashtable]$Headers,
         
         [string]$uri,
 
@@ -326,7 +325,7 @@ function Start-ThreadedOperation {
 
         [array]$DownloadFile,
 
-        [object]$def
+        [array]$def
 
     )
 
@@ -381,7 +380,7 @@ function Start-UnThreadedOperation {
 
         [array]$DownloadFile,
 
-        [object]$def
+        [array]$def
 
     )
 
