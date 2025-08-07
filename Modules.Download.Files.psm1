@@ -18,6 +18,10 @@ function Get-FileNameFromURI {
         
         $FileName = ($FileName -split "\?")[0]                                                          # Split the File at the QuestionMark and Select only the First Part of this
         
+    } elseif ($FileName -match "\..{0,}\?") {
+
+        $FileName = ($FileName -split "\?")[0]
+
     }
 
     return $FileName
@@ -429,7 +433,7 @@ function Invoke-FileDownload {
 
     }
 
-    [System.Console]::WriteLine("Downloading files, from specified links...")                                       # Write this string to the Console
+    [System.Console]::WriteLine("Downloading files ({0}), from specified links...", $link.Count)                    # Write this string to the Console
     
     if ($Mode -match "^Threaded") {
 
