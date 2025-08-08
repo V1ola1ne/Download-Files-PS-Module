@@ -39,17 +39,21 @@ function Get-NameFromInput {
         [parameter(Mandatory, Position = 1)]
         [string]$DownloadDirectory,
 
-        [array]$DownloadFile
+        [array]$DownloadFile,
+
+        [string]$uri
 
     )
 
     if ($DownloadFile) {
 
-        if ($DownloadFile[$link.IndexOf("$uri")]) {                                                             # If a Name exist at the current Link index
-    
-            if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$link.IndexOf("$uri")])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
+        $index = $link.IndexOf("$uri")
 
-                $FileName = $DownloadFile[$link.IndexOf("$uri")]                                                # use this, instead of trying to extract a name from the link
+        if ($DownloadFile[$index]) {                                                             # If a Name exist at the current Link index
+    
+            if (-not [System.IO.File]::Exists("$DownloadDirectory\$($DownloadFile[$index])")) {  # And if a File with the specified File Name, at the current index, does not already Exist
+
+                $FileName = $DownloadFile[$index]                                                # use this, instead of trying to extract a name from the link
 
                 Write-Verbose "Downloading to file '$FileName'"
 
@@ -339,7 +343,7 @@ function Start-ThreadedOperation {
         
         Write-Verbose "Attempt to download from '$uri'"
 
-        $FileName = Get-NameFromInput -link $link -DownloadDirectory $DownloadDirectory -DownloadFile $DownloadFile
+        $FileName = Get-NameFromInput -link $link -DownloadDirectory $DownloadDirectory -DownloadFile $DownloadFile -uri $uri
 
         Write-Verbose "Starting Download..."
         
@@ -392,7 +396,7 @@ function Start-UnThreadedOperation {
 
         Write-Verbose "Attempt to download from '$uri'"
 
-        $FileName = Get-NameFromInput -link $link -DownloadDirectory $DownloadDirectory -DownloadFile $DownloadFile
+        $FileName = Get-NameFromInput -link $link -DownloadDirectory $DownloadDirectory -DownloadFile $DownloadFile -uri $uri
 
         Write-Verbose "Starting Download..."
 
