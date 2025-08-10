@@ -163,6 +163,8 @@ class DownloadFile {                                                            
                 $DownloadPath = $DownloadDirectory, $FileName -join '\'                                     # Create the Download Path
                 $FileContent = $Content
 
+                Write-Verbose "Downloading File '$FileName' to $DownloadDirectory"
+
                 if ($ContentType -notmatch "text/") {
 
                     $File = [System.IO.File]::Create("$DownloadPath")                                           # Create the File
@@ -257,7 +259,7 @@ class DownloadFile {                                                            
                 $DownloadPath = $DownloadDirectory, $FileName -join '\'                                     # Create the Download Path
                 $FileContent = $Content
 
-                Write-Verbose "Downloading File $FileName to $DownloadDirectory"
+                Write-Verbose "Downloading File '$FileName' to $DownloadDirectory"
 
                 if ($ContentType -notmatch "text/") {
 
