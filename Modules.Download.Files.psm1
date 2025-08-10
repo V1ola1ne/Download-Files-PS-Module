@@ -433,7 +433,7 @@ function Invoke-FileDownload {
 
     $def = ${function:Get-NameFromRequest}.ToString(), ${function:Get-FileNameFromURI}.ToString()
 
-    if (![System.IO.DirectoryInfo]::new("$DownloadDirectory").Exists) {
+    if (![System.IO.Directory]::Exists("$DownloadDirectory")) {
 
         $null = [System.IO.Directory]::CreateDirectory("$DownloadDirectory")
 
