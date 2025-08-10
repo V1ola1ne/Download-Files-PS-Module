@@ -404,6 +404,8 @@ function Start-UnThreadedOperation {
 
     }
 
+    [System.Console]::WriteLine("`nAll files have been downloaded. Please checkout '$DownloadDirectory' ...")        # Please check if the File Download was successfull
+
 }
 
 
@@ -433,7 +435,7 @@ function Invoke-FileDownload {
 
     if (![System.IO.DirectoryInfo]::new("$DownloadDirectory").Exists) {
 
-        [System.IO.Directory]::CreateDirectory("$DownloadDirectory")
+        $null = [System.IO.Directory]::CreateDirectory("$DownloadDirectory")
 
     }
 
