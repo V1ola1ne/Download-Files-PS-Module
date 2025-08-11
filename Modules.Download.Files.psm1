@@ -437,6 +437,8 @@ function Invoke-FileDownload {
 
     if (![System.IO.Directory]::Exists("$DownloadDirectory")) {
 
+        Write-Verbose "$DownloadDirectory does not exist. Creating Folder..."
+
         $null = [System.IO.Directory]::CreateDirectory("$DownloadDirectory")
 
     }
