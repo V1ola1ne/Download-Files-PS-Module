@@ -447,7 +447,11 @@ function Invoke-FileDownload {
     
     if ($Mode -match "^Threaded") {
 
-        Import-Module Microsoft.PowerShell.ThreadJob                                                                # Import the ThreadJob Module to ensure Execution
+        if (!(Get-Module Microsoft.PowerShell.ThreadJob)) {
+
+            Import-Module Microsoft.PowerShell.ThreadJob                                                            # Import the ThreadJob Module to ensure Execution
+            
+        }
 
         Start-ThreadedOperation -link $link -DownloadDirectory $DownloadDirectory -UnZip $UnZip -DownloadFile $DownloadFile -def $def
 
